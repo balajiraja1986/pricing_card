@@ -1,5 +1,6 @@
 import React from "react";
-import Products from "./Pages/Products";
+// import Products from "./Pages/Products";
+import PricingDetails from "./Pages/PricingDetails";
 
 
 
@@ -7,7 +8,7 @@ function App() {
    
   return(
     <div className="App">
- <Products />
+<PricingDetails />
 </div>
 )}  
 

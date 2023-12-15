@@ -3,11 +3,13 @@ import PricingDetails from "./Pages/PricingDetails";
 
 
 
+
 function App() {
    
   return(
     <div className="App">
-< PricingDetails /> 
+
+ <PricingDetails />
 </div>
 )}  
 
