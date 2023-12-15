@@ -1,6 +1,6 @@
 import React from "react";
-// import Products from "./Pages/Products";
-import PricingDetails from "./Pages/PricingDetails";
+import Products from "./Pages/Products";
+
 
 
 
@@ -8,7 +8,7 @@ function App() {
    
   return(
     <div className="App">
-<PricingDetails />
+<Products />
 </div>
 )}  
 
