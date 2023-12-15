@@ -3,6 +3,7 @@ import React from 'react'
 export default function ProductCard({product = {},
     handleAddToCart = (data) =>{},
     disabled = () => { }, 
+    removeItemFromCart = (data) => {},
 }) {
   return (
     <div className="col mb-5">
@@ -35,7 +36,9 @@ export default function ProductCard({product = {},
                                     onClick = {() => handleAddToCart(product)}
                                     disabled = {disabled}
                                     > Add to cart</button>
-                                    <button className="btn btn-outline-dark mt-auto ml-2"> Remove</button>
+                                   <button className="btn btn-outline-dark mt-auto ml-2" onClick={() => removeItemFromCart(product)}>
+                                    Remove
+                                    </button>
                                 </div>
                             </div>
                         </div>

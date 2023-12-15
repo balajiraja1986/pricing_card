@@ -28,7 +28,11 @@ export default function Products() {
       setCart(cartCopy);
     }
   }
- 
+  function removeItemFromCart(product) {
+    let itemRemove = cart.filter((item) => item.courseName !== product.courseName);
+    setCart(itemRemove);
+  }
+
   return (
     <div>
       <Navbar brand = "Learning Community" cartCount = {cart.length}/>
@@ -47,7 +51,7 @@ export default function Products() {
                     ? true
                     : false
                   }
-                  // removeItem = {removeItem}
+                  removeItemFromCart={removeItemFromCart}
                   />
                   )) 
                   }
