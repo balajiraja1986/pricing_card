@@ -1,0 +1,16 @@
+head,
+body{
+    width:0px;
+    height:0px;
+    background-color: rgb(127, 140, 255);      
+}
+
+.flex{
+    display: flex;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+

@@ -1,0 +1,116 @@
+import React from 'react'
+
+export default function ProductCard({product = {},
+    handleAddToCart = (data) =>{},
+    disabled = () => { }, 
+    removeItemFromCart = (data) => { },
+}) {
+  return (
+    <div className="col mb-5">
+                        <div className="card h-100">
+                      
+                            {
+                                product.isForSale && (
+                                    <div className="badge bg-dark text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>Sale</div>
+                                )
+                            }
+                          
+                            <img className="card-img-top" 
+                            src={
+                                product.courseImage || "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"} 
+                                alt={product.productName} />
+
+                            <div className="card-body p-4">
+                                <div className="text-center">
+                              
+                                    <h5 className="fw-bolder">{product.courseName}</h5>
+                                
+                                    <span className="text-muted text-decoration-line-through">₹{product.actualPrice}</span>
+                                    ₹{product.disountedPrice}
+                                </div>
+                            </div>
+                      
+                            <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div className="text-center">
+                                    <button className="btn btn-outline-dark  mt-auto" 
+                                    onClick = {() => handleAddToCart(product)}
+                                    disabled = {disabled}
+                                    > Add to cart</button>
+                                    <button className="btn btn-outline-dark mt-auto ml-2"
+                                    onClick = {() => removeItemFromCart(product)}
+                                    > Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+  )
+}
+
+import React, {useEffect, useState} from 'react'
+import Navbar from '../Components/Navbar'
+import Header from '../Components/Header'
+import Footer from '../Components/Footer'
+import ProductCard from '../Components/Card/ProductCard'
+
+
+export default function Products() {
+  const [courses, setcourses] = useState([]);
+  const [cart, setCart] = useState([]);
+ 
+
+  useEffect(() => {
+    fetch("mocks/courses.json")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data && data.courses.length > 0) {
+      setcourses(data.courses);
+    }
+  })    
+  .catch((error) => console.log(error));
+}, []);
+
+  function handleAddToCart (data = {}){
+    if (data){
+      let cartCopy = [...cart];
+      cartCopy.push(data);
+      setCart(cartCopy);
+    }
+  }
+
+  function removeItemFromCart(index) {
+    if (index >= 0) {
+      let itemRemove = [...cart];
+      itemRemove.splice(index, 1);
+      setCart(itemRemove);
+    }
+  } 
+  
+  return (
+    <div>
+      <Navbar brand = "Learning Community" cartCount = {cart.length}/>
+      <Header heading = "Shop your next course" description ="Get 15% discount on all courses" />
+        <section className="py-5">
+            <div className="container px-4 px-lg-5 mt-5">
+                <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                  {courses && 
+                  courses.length > 0 && 
+                  courses.map((d, i) => (
+                  <ProductCard product ={d} key = {`product-courses-${i}`}
+                  handleAddToCart = {handleAddToCart}
+                  disabled = {
+                    cart.filter((cITem) => cITem.courseName === d.courseName)
+                    .length > 0
+                    ? true
+                    : false
+                  }
+                  removeItemFromCart = {removeItemFromCart}
+                  />
+                  )) 
+                  }
+                  </div>
+            </div>
+        </section>
+      <Footer/>
+    </div>
+  )
+}
